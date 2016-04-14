@@ -4,17 +4,23 @@
   "paths": [],
   "libraries": [
     "enyo",
-    "moonstone",
+    "moonslayouttone",
+    "layout",
+    "enyo-ilib",
     "spotlight"
   ],
   "sources": {
     "enyo": "https://github.com/enyojs/enyo.git",
     "moonstone": "https://github.com/enyojs/moonstone.git",
+    "layout": "https://github.com/enyojs/layout.git",
+    "enyo-ilib": "https://github.com/enyojs/enyo-ilib.git",
     "spotlight": "https://github.com/enyojs/spotlight.git"
   },
   "targets": {
     "enyo": "2.7.0",
     "moonstone": "2.7.0",
+    "layout": "2.7.0",
+    "enyo-ilib": "2.7.0",
     "spotlight": "2.7.0"
   },
   "production": false,
