@@ -22,7 +22,9 @@ var scoreboard = Control.kind({
       away: {
         name: this.score.away,
         run: this.score.linescore ? this.score.linescore.r.away : ''
-      }
+      },
+      status: this.score.status,
+      reason: this.score.reason
     });
 
     this.$.table.setHomeName(this.score.home);

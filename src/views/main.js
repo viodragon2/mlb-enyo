@@ -78,7 +78,9 @@ var main = Control.kind({
           linescore: game.linescore,
           winning_pitcher: game.winning_pitcher,
           losing_pitcher: game.losing_pitcher,
-          save_pitcher: game.save_pitcher
+          save_pitcher: game.save_pitcher,
+          status: game.status.status, // "Final", "Postponed", "Cancelled"
+          reason: game.status.reason
         }
       };
       this.dataArr.push(data);

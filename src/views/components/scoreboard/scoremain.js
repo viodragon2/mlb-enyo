@@ -20,6 +20,8 @@ var scoremain = Control.kind({
       ]
     },
 
+    {name: 'status', classes: 'score-status'},
+
     {name: 'warning', content: 'No Games', showing: false}
   ],
   dataChanged: function() {
@@ -30,7 +32,9 @@ var scoremain = Control.kind({
     this.$.homeRun.set('content', this.data.home.run);
     this.$.awayRun.set('content', this.data.away.run);
 
-    this.$.divider.set('content', this.data.away.run && this.data.home.run? '-': '@');
+    var isPlayed = this.data.away.run && this.data.home.run;
+    this.$.divider.set('content', isPlayed ? '-': '@');
+    this.$.status.set('content', isPlayed ? null : this.data.status + ' : ' + this.data.reason);
   },
   reset: function() {
     this.$.display.hide();
