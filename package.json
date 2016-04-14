@@ -1,7 +1,10 @@
 {
   "name": "mlb-enyo",
   "main": "index.js",
-  "assets": [],
+  "assets": [
+    "assets/**/*.*",
+    "*.png"
+  ],
   "styles": [],
   "devAssets": [],
   "moduleDir": "src"
