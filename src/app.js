@@ -9,16 +9,17 @@ var app = Application.kind({
   create: function() {
     Application.prototype.create.apply(this, arguments);
 
-    var date,
+    var template = 'mlb',
+        data = {},
         launchParams;
 
     if (window.PalmSystem && window.PalmSystem.launchParams) {
       launchParams = JSON.parse(window.PalmSystem.launchParams);
-      date = launchParams.date;
-      //TODO: to be formatted
+      template = launchParams.template;
+      data = launchParams.data;
     }
 
-    this.view.setDate(date);
+    this.view.setTemplate(template, data);
   }
 });
 
