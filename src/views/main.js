@@ -3,6 +3,7 @@ var
 
 var
   IconButton = require('moonstone/IconButton'),
+  Scroller = require('moonstone/Scroller'),
   DatePicker = require('moonstone/DatePicker');
 
 var
@@ -13,18 +14,24 @@ var
   MLB = require('../data/mlb');
 
 var main = Control.kind({
-  classes: 'moon main',
+  classes: 'moon main enyo-fit',
   components: [
-    {classes: 'inline', components: [
-      {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
-      {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'},
-      {name: 'datePicker', kind: DatePicker, content: 'Date', onChange: 'onDateChange'}
-    ]},
-
-    {classes: 'inline', kind: Control, components: [
+    {classes: 'main-header'},
+    {classes: 'inline main-display', kind: Control, components: [
       {name: 'awayTeam', kind: Team},
       {name: 'scoreboard', kind: ScoreBoard},
       {name: 'homeTeam', kind: Team},
+    ]},
+
+    {kind: Scroller, classes: 'main-controller enyo-fill', components: [
+      {
+        classes: 'inline',
+        components: [
+          {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
+          {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'},
+          {name: 'datePicker', kind: DatePicker, maxYear: 2016, content: 'Date', onChange: 'onDateChange'}
+        ]
+      }
     ]}
   ],
   setDate: function(date) {
