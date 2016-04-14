@@ -8,7 +8,8 @@ var
 
 var
   Team = require('./components/team'),
-  ScoreBoard = require('./components/scoreBoard');
+  ScoreBoard = require('./components/scoreBoard'),
+  scorelist = require('./components/scorelist');
 
 var
   MLB = require('../data/mlb');
@@ -28,10 +29,13 @@ var main = Control.kind({
         classes: 'inline',
         components: [
           {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
+          {classes: 'moon-1h'},
           {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'},
+          {classes: 'moon-1h'},
           {name: 'datePicker', kind: DatePicker, maxYear: 2016, content: 'Date', onChange: 'onDateChange'}
         ]
-      }
+      },
+      {name: 'scorelist', kind: scorelist}
     ]}
   ],
   setDate: function(date) {
@@ -81,10 +85,19 @@ var main = Control.kind({
           save_pitcher: game.save_pitcher,
           status: game.status.status, // "Final", "Postponed", "Cancelled"
           reason: game.status.reason
+        },
+        summary: {
+          home: game.home_name_abbrev,
+          away: game.away_name_abbrev,
+          homeRun: game.linescore ? game.linescore.r.home : null,
+          awayRun: game.linescore ? game.linescore.r.away : null
         }
       };
       this.dataArr.push(data);
     }
+
+    this.$.scorelist.set('collection', this.dataArr.map(function(data) {return data.summary;}));
+
     if (this.index == -1) {
       this.nextTapped();
     }
