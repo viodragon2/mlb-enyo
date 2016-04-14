@@ -5,7 +5,9 @@
     "assets/**/*.*",
     "*.png"
   ],
-  "styles": [],
+  "styles": [
+    "src/style/*.*"
+  ],
   "devAssets": [],
   "moduleDir": "src"
 }

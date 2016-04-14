@@ -1,0 +1,6 @@
+{
+  "main": "scoreboard.js",
+  "styles": [
+    "scoreboard.less"
+  ]
+}

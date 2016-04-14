@@ -1,0 +1,42 @@
+.scoreboard {
+  .score {
+    font-size: 72px;
+    color: #000;
+    .team-info {
+      width: 342px;
+    }
+  }
+
+  .table {
+    margin: 24px;
+    width: 1308px;
+
+    .team {
+      width: 210px;
+    }
+  }
+
+  .scoreboard-column {
+    display: inline-block;
+    width: 69px;
+
+    .header {
+      background-color: #333;
+    }
+
+    .cell {
+      font-family: "MuseoSans 300";
+      padding: 12px 24px;
+    }
+
+    &.run .cell {
+      font-family: "MuseoSans 700";
+    }
+  }
+
+  .pitchers > * {
+    font-family: "MuseoSans 300";
+    font-size: 24px;
+    margin: 0 12px;
+  }
+}
