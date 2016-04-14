@@ -8,7 +8,7 @@ var scoremain = Control.kind({
       {name: 'awayName'},
       {name: 'awayRun'}
     ]},
-    {content: ' - ', classes: 'moon-2h'},
+    {name: 'divider', classes: 'moon-2h'},
     {classes: 'team-info', components: [
       {name: 'homeName'},
       {name: 'homeRun'}
@@ -19,6 +19,8 @@ var scoremain = Control.kind({
     this.$.awayName.set('content', this.data.away.name);
     this.$.homeRun.set('content', this.data.home.run);
     this.$.awayRun.set('content', this.data.away.run);
+
+    this.$.divider.set('content', this.data.away.run && this.data.home.run? '-': '@');
   }
 });
 

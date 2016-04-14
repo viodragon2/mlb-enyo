@@ -17,23 +17,32 @@ var scoreboard = Control.kind({
     this.$.score.set('data', {
       home: {
         name: this.score.home,
-        run: this.score.linescore.r.home
+        run: this.score.linescore ? this.score.linescore.r.home : ''
       },
       away: {
         name: this.score.away,
-        run: this.score.linescore.r.away
+        run: this.score.linescore ? this.score.linescore.r.away : ''
       }
     });
 
     this.$.table.setHomeName(this.score.home);
     this.$.table.setAwayName(this.score.away);
-    this.$.table.setTable(this.score.linescore);
 
-    this.$.pitchers.setPitchers(
-      this.score.winning_pitcher,
-      this.score.losing_pitcher,
-      this.score.save_pitcher
-    );
+    // display only when game has been played
+    if (this.score.linescore) {
+      this.$.table.setTable(this.score.linescore);
+      this.$.table.show();
+
+      this.$.pitchers.setPitchers(
+        this.score.winning_pitcher,
+        this.score.losing_pitcher,
+        this.score.save_pitcher
+      );
+      this.$.pitchers.show();
+    } else {
+      this.$.table.hide();
+      this.$.pitchers.hide();
+    }
   }
 });
 

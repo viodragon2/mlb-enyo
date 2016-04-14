@@ -2,7 +2,8 @@ var
   Control = require('enyo/Control');
 
 var
-  IconButton = require('moonstone/IconButton');
+  IconButton = require('moonstone/IconButton'),
+  DatePicker = require('moonstone/DatePicker');
 
 var
   Team = require('./components/team'),
@@ -14,26 +15,36 @@ var
 var main = Control.kind({
   classes: 'moon main',
   components: [
-    {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
-    {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'},
+    {classes: 'inline', components: [
+      {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
+      {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'},
+      {name: 'datePicker', kind: DatePicker, content: 'Date', onChange: 'onDateChange'}
+    ]},
 
-    {name: 'board', classes: 'inline', kind: Control, components: [
+    {classes: 'inline', kind: Control, components: [
       {name: 'awayTeam', kind: Team},
       {name: 'scoreboard', kind: ScoreBoard},
       {name: 'homeTeam', kind: Team},
     ]}
   ],
+  setDate: function(date) {
+    this.date = date;
+
+    if (!this.date) {
+      var yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      this.date = yesterday;
+    }
+
+    this.$.datePicker.set('value', this.date);
+  },
   create: function() {
     Control.prototype.create.apply(this, arguments);
     this.index = -1;
-    var option = {
-      path: 'year_2016/month_04/day_13/'
-    };
-    var mlb = new MLB();
-    mlb.getScoreboard(option, this.success.bind(this), this.err.bind(this));
+    this.dataArr = [];
   },
   success: function(sender, res) {
-    this.dataArr = this.dataArr || [];
+    this.dataArr.length = 0;
 
     var games = res.data.games.game,
         game,
@@ -95,6 +106,31 @@ var main = Control.kind({
     this.$.homeTeam.set('data', this.dataArr[this.index].home);
 
     this.$.scoreboard.set('score', this.dataArr[this.index].score);
+  },
+  onDateChange: function(sender, ev) {
+    var m = ev.value.getMonth() + 1,
+        d = ev.value.getDate(),
+        mlb = new MLB(),
+        option;
+
+    // add leading zero to months
+    if (m < 10) {
+      m = '0' + m;
+    }
+
+    // add leading zero to date
+    if (d < 10) {
+      d = '0' + d;
+    }
+
+    option = {
+      // path: 'year_2016/month_04/day_09/'
+      path: 'year_' + ev.value.getFullYear() + '/month_' + m + '/day_' + d + '/'
+    };
+
+    // reset index
+    this.index = -1;
+    mlb.getScoreboard(option, this.success.bind(this), this.err.bind(this));
   }
 });
 
