@@ -19,6 +19,11 @@ var team = Control.kind({
     this.set('abbrev', this.data.abbrev);
     this.$.logo.set('src', 'assets/' + this.abbrev + '.png');
     this.setRecord(this.data.win, this.data.loss);
+  },
+  clear: function() {
+    this.set('abbrev', null);
+    this.$.record.set('content', null);
+    this.$.logo.set('src', null)
   }
 });
 

@@ -43,6 +43,11 @@ var scoreboard = Control.kind({
       this.$.table.hide();
       this.$.pitchers.hide();
     }
+  },
+  clear: function() {
+    this.$.score.reset();
+    this.$.table.hide();
+    this.$.pitchers.hide();
   }
 });
 

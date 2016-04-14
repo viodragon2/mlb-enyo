@@ -46,7 +46,7 @@ var main = Control.kind({
   success: function(sender, res) {
     this.dataArr.length = 0;
 
-    var games = res.data.games.game,
+    var games = res.data.games && res.data.games.game || [],
         game,
         data = {},
         i;
@@ -102,10 +102,16 @@ var main = Control.kind({
       this.index = 0;
     }
 
-    this.$.awayTeam.set('data', this.dataArr[this.index].away);
-    this.$.homeTeam.set('data', this.dataArr[this.index].home);
+    if (this.dataArr.length > 0) {
+      this.$.awayTeam.set('data', this.dataArr[this.index].away);
+      this.$.homeTeam.set('data', this.dataArr[this.index].home);
 
-    this.$.scoreboard.set('score', this.dataArr[this.index].score);
+      this.$.scoreboard.set('score', this.dataArr[this.index].score);
+    } else {
+      this.$.awayTeam.clear();
+      this.$.homeTeam.clear();
+      this.$.scoreboard.clear();
+    }
   },
   onDateChange: function(sender, ev) {
     var m = ev.value.getMonth() + 1,
