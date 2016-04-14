@@ -4,7 +4,7 @@
   "paths": [],
   "libraries": [
     "enyo",
-    "moonslayouttone",
+    "moonstone",
     "layout",
     "enyo-ilib",
     "spotlight"
