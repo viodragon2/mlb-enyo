@@ -12,7 +12,7 @@ var
   scorelist = require('./components/scorelist');
 
 var
-  MLB = require('../data/mlb');
+  MLB = require('../../data/mlb');
 
 var mlb = Control.kind({
   classes: 'moon main mlb enyo-fit',
