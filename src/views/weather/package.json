@@ -1,6 +1,10 @@
 {
   "main": "weather.js",
   "styles": [
+    "css/weather-icons.min.css",
     "weather.less"
+  ],
+  "assets": [
+    "font/*.*"
   ]
 }

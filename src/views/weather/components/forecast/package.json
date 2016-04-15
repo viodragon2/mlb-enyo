@@ -1,0 +1,6 @@
+{
+  "main": "forecast.js",
+  "styles": [
+    "forecast.less"
+  ]
+}
