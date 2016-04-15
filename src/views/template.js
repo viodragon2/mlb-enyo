@@ -16,15 +16,9 @@ var teamplate = Control.kind({
     this.templateChanged();
   },
   templateChanged: function() {
-    this.applyHeaderClass();
     this.createDisplayComponents();
     this.createControlComponents();
     this.dataChanged();
-  },
-  applyHeaderClass: function() {
-    this.$.header.removeClass(this.teamplateClass);
-    this.teamplateClass = this.template;
-    this.$.header.addClass(this.teamplateClass);
   },
   createDisplayComponents() {
     var owner = this.hasOwnProperty('displayComponents') ? this.getInstanceOwner() : this;

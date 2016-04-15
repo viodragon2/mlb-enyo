@@ -14,6 +14,7 @@ var
   MLB = require('../../data/mlb');
 
 var mlb = template.kind({
+  classes: 'mlb',
   displayComponents: [
     {classes: 'inline', components: [
       {name: 'awayTeam', kind: Team},
