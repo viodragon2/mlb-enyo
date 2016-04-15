@@ -19,29 +19,32 @@ var forecasticon = Control.kind({
   }
 });
 
+var forecastitem = Control.kind({
+  classes: 'forecastitem inline',
+  components: [
+    {name: 'date', classes: 'date'},
+    {name: 'day', classes: 'day'},
+    {name: 'icon', kind: forecasticon},
+    {name: 'high', classes: 'hltemp'},
+    {name: 'low', classes: 'hltemp'}
+  ],
+  bindings: [
+    {from: 'model.code', to: '$.icon.code'},
+    {from: 'model.date', to: '$.date.content', transform: function(d) {
+      var dd = d.split(' ');
+      return dd[1] + ' ' + dd[0];
+    }},
+    {from: 'model.day', to: '$.day.content'},
+    {from: 'model.high', to: '$.high.content', transform: function(t) {return t + '\u00B0';}},
+    {from: 'model.low', to: '$.low.content', transform: function(t) {return t + '\u00B0';}}
+  ]
+});
+
 var forecast = Control.kind({
   classes: 'forecast',
   components: [
     {name: 'list', classes: 'forecastlist', kind: DataList, defaultBindingKind: PassiveBinding, components: [
-      {components: [
-        {classes: 'inline', components: [
-          {name: 'date'},
-          {name: 'day'},
-          {name: 'icon', kind: forecasticon},
-          {name: 'high'},
-          {name: 'low'}
-        ]}
-      ],
-      bindings: [
-        {from: 'model.code', to: '$.icon.code'},
-        {from: 'model.date', to: '$.date.content', transform: function(d) {
-          var dd = d.split(' ');
-          return dd[1] + ' ' + dd[0];
-        }},
-        {from: 'model.day', to: '$.day.content'},
-        {from: 'model.high', to: '$.high.content', transform: function(t) {return t + '\u00B0';}},
-        {from: 'model.low', to: '$.low.content', transform: function(t) {return t + '\u00B0';}}
-      ]}
+      {kind: forecastitem}
     ]}
   ],
   dataChanged: function() {

@@ -36,7 +36,17 @@ var weather = template.kind({
     ]}
   ],
   controlComponents: [
-    {name: 'forecast', kind: forecast}
+    {classes: 'inline top', components: [
+      {components: [
+        {classes: 'label', content: 'Forecast'},
+        {name: 'forecast', classes: 'column',kind: forecast},
+      ]},
+      {classes: 'moon-2h'},
+      {components: [
+        {classes: 'label', content: 'Detail'},
+        {name: 'detail', classes: 'column'}
+      ]}
+    ]}
   ],
   dataChanged: function() {
     this.units = this.data.units;
