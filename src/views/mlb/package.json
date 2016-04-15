@@ -1,3 +1,6 @@
 {
-  "main": "mlb.js"
+  "main": "mlb.js",
+  "styles": [
+    "mlb.less"
+  ]
 }

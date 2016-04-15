@@ -23,7 +23,7 @@ var mlb = template.kind({
   ],
   controlComponents: [
     {
-      classes: 'inline',
+      classes: 'inline controller',
       components: [
         {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
         {classes: 'moon-8h'},

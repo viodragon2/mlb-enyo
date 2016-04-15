@@ -32,7 +32,7 @@ var scoreboard = Control.kind({
 
     // display only when game has been played
     if (this.score.linescore) {
-      this.$.table.setTable(this.score.linescore);
+      this.$.table.setTable(this.score.linescore, this.score.status);
       this.$.table.show();
 
       this.$.pitchers.setPitchers(

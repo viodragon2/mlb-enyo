@@ -23,7 +23,7 @@ var team = Control.kind({
   clear: function() {
     this.set('abbrev', null);
     this.$.record.set('content', null);
-    this.$.logo.set('src', null)
+    this.$.logo.set('src', null);
   }
 });
 
