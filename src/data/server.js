@@ -16,11 +16,7 @@ internals.baseUrl = internals.server.protocol + '://' + internals.server.host;
 var server = Control.kind({
 
   getDataById: function(id, success, err) {
-    this.fetch(id, success, err);
-  },
-
-  addData: function(data, success, err) {
-    var url = internals.baseUrl + '/addData?data=' + JSON.stringify(data);
+    var url = internals.baseUrl + '/data?id=' + id;
     var ajax = new Ajax({
       url: url,
       timeout: 10000
@@ -30,8 +26,8 @@ var server = Control.kind({
     ajax.error(this, err);
   },
 
-  fetch: function(id, success, err) {
-    var url = internals.baseUrl + '/data?id=' + id;
+  addData: function(data, success, err) {
+    var url = internals.baseUrl + '/addData?data=' + JSON.stringify(data);
     var ajax = new Ajax({
       url: url,
       timeout: 10000

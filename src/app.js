@@ -4,35 +4,43 @@ var
 var
   MainView = require('./views/main');
 
+var
+  server = require('./data/server');
+
 var app = Application.kind({
   view: MainView,
+  request_id: '',
+  // request_id: '1460710806060',
+  template: '',
+  // template: 'movie',
+  // template: 'mlb',
+  // template: 'weather',
+  data: {},
   create: function() {
     Application.prototype.create.apply(this, arguments);
 
-    // var template = 'movie',
-    var template = 'mlb',
-    // var template = 'weather',
-        data = {},
-        id = '1460695267375',
+    var s = new server(),
         launchParams;
 
     if (window.PalmSystem && window.PalmSystem.launchParams) {
       launchParams = JSON.parse(window.PalmSystem.launchParams);
-      template = launchParams.template;
-      data = launchParams.data;
-      id = launchParams.id;
+      this.template = launchParams.template;
+      this.data = launchParams.data;
+      this.request_id = launchParams.id;
     }
 
-    this.view.setTemplate(template, data);
+    s.getDataById(this.request_id, this.success.bind(this), this.err.bind(this));
   },
   success: function(sender, res) {
-    console.log("success");
-    console.log(res);
+    if (res.data) {
+      this.data = JSON.parse(res.data);
+    }
+
+    this.view.setTemplate(this.template, this.data);
   },
   err: function(sender, res) {
-    console.log("err");
-    console.log(res);
-
+    console.err('failed to recieve data from server: ' + res);
+    this.view.setTemplate(this.template, this.data);
   }
 });
 
