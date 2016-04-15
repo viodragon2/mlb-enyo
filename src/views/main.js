@@ -9,6 +9,8 @@ var
 var main = Control.kind({
   classes: 'moon main enyo-fit',
   setTemplate: function(template, data) {
+    this.destroyComponents();
+
     switch(template) {
       case 'mlb':
         this.createComponent({
