@@ -41,47 +41,26 @@ var mlb = template.kind({
     template.prototype.create.apply(this, arguments);
   },
   dataChanged: function() {
-    this.data = this.data.data;
-    var date = new Date(this.data.games.year, parseInt(this.data.games.month) - 1, this.data.games.day);
-
-    this.set('date', date);
-  },
-  dateChanged: function() {
-    var m = this.date.getMonth() + 1,
-        d = this.date.getDate(),
-        mlb = new MLB(),
-        option;
-
-    // add leading zero to months
-    if (m < 10) {
-      m = '0' + m;
+    var date;
+    if (this.data.data) {
+      this.data = this.data.data;
+      this.setupData();
+    } else {
+      date = new Date();
+      this.set('date', date);
     }
-
-    // add leading zero to date
-    if (d < 10) {
-      d = '0' + d;
-    }
-
-    option = {
-      // path: 'year_2016/month_04/day_09/'
-      path: 'year_' + this.date.getFullYear() + '/month_' + m + '/day_' + d + '/'
-    };
-
-    // reset index
-    this.index = -1;
-    mlb.getScoreboard(option, this.success.bind(this), this.err.bind(this));
-    this.$.datePicker.set('value', this.date);
   },
-  success: function(sender, res) {
+  setupData: function() {
+    var games = this.data.games && this.data.games.game || [],
+        game,
+        tmp = {},
+        i;
+
     this.dataArr.length = 0;
 
-    var games = res.data.games && res.data.games.game || [],
-        game,
-        data = {},
-        i;
     for (i = 0; i < games.length; i++) {
       game = games[i];
-      data = {
+      tmp = {
         home: {
           abbrev: game.home_name_abbrev,
           name: game.home_team_name,
@@ -111,7 +90,7 @@ var mlb = template.kind({
           awayRun: game.linescore ? game.linescore.r.away : null
         }
       };
-      this.dataArr.push(data);
+      this.dataArr.push(tmp);
     }
 
     this.$.scorelist.set('collection', this.dataArr.map(function(data) {return data.summary;}));
@@ -119,6 +98,36 @@ var mlb = template.kind({
     if (this.index == -1) {
       this.nextTapped();
     }
+  },
+  dateChanged: function() {
+    var m = this.date.getMonth() + 1,
+        d = this.date.getDate(),
+        mlb = new MLB(),
+        option;
+
+    // add leading zero to months
+    if (m < 10) {
+      m = '0' + m;
+    }
+
+    // add leading zero to date
+    if (d < 10) {
+      d = '0' + d;
+    }
+
+    option = {
+      // path: 'year_2016/month_04/day_09/'
+      path: 'year_' + this.date.getFullYear() + '/month_' + m + '/day_' + d + '/'
+    };
+
+    // reset index
+    this.index = -1;
+    mlb.getScoreboard(option, this.success.bind(this), this.err.bind(this));
+    this.$.datePicker.set('value', this.date);
+  },
+  success: function(sender, res) {
+    this.data = res.data;
+    this.setupData();
   },
   err: function(sender, res) {
     console.error(res);
