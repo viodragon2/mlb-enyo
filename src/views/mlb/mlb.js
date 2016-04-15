@@ -1,9 +1,5 @@
 var
-  Control = require('enyo/Control');
-
-var
   IconButton = require('moonstone/IconButton'),
-  Scroller = require('moonstone/Scroller'),
   DatePicker = require('moonstone/DatePicker');
 
 var
@@ -12,45 +8,42 @@ var
   scorelist = require('./components/scorelist');
 
 var
+  template = require('../template');
+
+var
   MLB = require('../../data/mlb');
 
-var mlb = Control.kind({
-  classes: 'moon main mlb enyo-fit',
-  components: [
-    {classes: 'main-header'},
-    {classes: 'inline main-display', kind: Control, components: [
+var mlb = template.kind({
+  displayComponents: [
+    {classes: 'inline', components: [
       {name: 'awayTeam', kind: Team},
       {name: 'scoreboard', kind: ScoreBoard},
-      {name: 'homeTeam', kind: Team},
-    ]},
-
-    {kind: Scroller, classes: 'main-controller enyo-fill', components: [
-      {
-        classes: 'inline',
-        components: [
-          {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
-          {classes: 'moon-1h'},
-          {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'},
-          {classes: 'moon-1h'},
-          {name: 'datePicker', kind: DatePicker, maxYear: 2016, content: 'Date', onChange: 'onDateChange'}
-        ]
-      },
-      {name: 'scorelist', kind: scorelist}
+      {name: 'homeTeam', kind: Team}
     ]}
   ],
+  controlComponents: [
+    {
+      classes: 'inline',
+      components: [
+        {name: 'prev', kind: IconButton, icon: 'arrowsmallleft', ontap: 'prevTapped'},
+        {classes: 'moon-8h'},
+        {name: 'datePicker', kind: DatePicker, minYear: 1970, maxYear: 2016, content: 'Date', onChange: 'onDateChange'},
+        {classes: 'moon-8h'},
+        {name: 'next', kind: IconButton, icon: 'arrowsmallright', ontap: 'nextTapped'}
+      ]
+    },
+    {name: 'scorelist', kind: scorelist}
+  ],
   create: function() {
-    Control.prototype.create.apply(this, arguments);
     this.index = -1;
     this.dataArr = [];
-    this.dateChanged();
+    template.prototype.create.apply(this, arguments);
+  },
+  dataChanged: function() {
+    this.set('date', this.data.date || new Date());
+    this.set('team', this.data.team);
   },
   dateChanged: function() {
-    if (!this.date) {
-      var yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      this.date = yesterday;
-    }
-
     var m = this.date.getMonth() + 1,
         d = this.date.getDate(),
         mlb = new MLB(),

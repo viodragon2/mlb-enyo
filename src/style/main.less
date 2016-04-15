@@ -3,24 +3,32 @@
   text-align: center;
   padding: 0;
 
-  .main-header {
+  .teamplate-header {
     height: 150px;
 
-    .mlb &{
+    &.mlb {
       background-color: #002e6d;
+    }
+    &.movie {
+      background-color: #E6B91E;
     }
   }
 
-  .main-display {
+  .teamplate-display {
     padding: 24px 0;
   }
 
-  .main-controller {
+  .teamplate-controller {
     background-color: @moon-light-gray;
   }
 }
 
-.inline > * {
-  display: inline-block;
-  vertical-align: middle;
+.inline {
+  & > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .top {
+    vertical-align: top;
+  }
 }
