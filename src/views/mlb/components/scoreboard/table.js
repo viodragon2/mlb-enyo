@@ -46,6 +46,9 @@ var table = Control.kind({
       if (status == 'Final') {
         this.$['innings_' + (i+1)].set('home', i == 8 && !inning[i].home ? 'X' : inning[i].home);
         this.$['innings_' + (i+1)].set('away', inning[i].away);
+      } else if (status == 'In Progress') {
+        this.$['innings_' + (i+1)].set('home', inning[i].home || '');
+        this.$['innings_' + (i+1)].set('away', inning[i].away || '');
       } else {
         this.$['innings_' + (i+1)].set('away', 0);
         this.$['innings_' + (i+1)].set('home', 0);
