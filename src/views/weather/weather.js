@@ -44,12 +44,32 @@ var weather = template.kind({
       {classes: 'moon-2h'},
       {components: [
         {classes: 'label', content: 'Detail'},
-        {name: 'detail', classes: 'column'}
+        {name: 'detail', classes: 'column', components: [
+          {classes: 'inline detail-item', components: [
+            {classes: 'detail-label', content: 'Windchill'},
+            {classes: 'detail-value', name: 'windchill'}
+          ]},
+          {classes: 'inline detail-item', components: [
+            {classes: 'detail-label', content: 'Humidity'},
+            {classes: 'detail-value', name: 'humidity'}
+          ]},
+          {classes: 'inline detail-item', components: [
+            {classes: 'detail-label', content: 'Visibility'},
+            {classes: 'detail-value', name: 'visibility'}
+          ]},
+          {classes: 'inline detail-item', components: [
+            {classes: 'detail-label', content: 'Sunrise'},
+            {classes: 'detail-value', name: 'sunrise'}
+          ]},
+          {classes: 'inline detail-item', components: [
+            {classes: 'detail-label', content: 'Sunset'},
+            {classes: 'detail-value', name: 'sunset'}
+          ]}
+        ]}
       ]}
     ]}
   ],
   dataChanged: function() {
-    this.units = this.data.units;
     this.$.city.set('content', this.data.location.city);
     this.$.country.set('content', this.data.location.country);
     this.$.icon.addClass(weathericon.setWeatherIcon(this.data.item.condition.code));
@@ -58,6 +78,12 @@ var weather = template.kind({
     this.$.high.set('content', this.data.item.forecast[0].high + '\u00B0');
     this.$.low.set('content', this.data.item.forecast[0].low + '\u00B0');
     this.$.forecast.set('data', this.data.item.forecast);
+
+    this.$.windchill.set('content', this.data.wind.chill + '\u00B0 ' + this.data.units.temperature);
+    this.$.humidity.set('content', this.data.atmosphere.humidity + '%');
+    this.$.visibility.set('content', this.data.atmosphere.visibility + this.data.units.distance);
+    this.$.sunrise.set('content', this.data.astronomy.sunrise);
+    this.$.sunset.set('content', this.data.astronomy.sunset);
   }
 });
 
