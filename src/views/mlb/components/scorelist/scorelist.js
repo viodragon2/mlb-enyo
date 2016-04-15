@@ -1,5 +1,5 @@
 var
-  DataList = require('enyo/DataList')
+  DataList = require('enyo/DataList'),
   Binding = require('enyo/Binding'),
   PassiveBinding = Binding.PassiveBinding;
 

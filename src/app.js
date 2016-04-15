@@ -1,5 +1,6 @@
 var
-  Application = require('enyo/Application');
+  Application = require('enyo/Application'),
+  Signals = require('enyo/Signals');
 
 var
   MainView = require('./views/main');
@@ -16,20 +17,29 @@ var app = Application.kind({
   // template: 'mlb',
   // template: 'weather',
   data: {},
+  components: [
+    {
+      kind: Signals,
+      onwebOSRelaunch: 'handleRelaunch'
+    }
+  ],
   create: function() {
     Application.prototype.create.apply(this, arguments);
 
-    var s = new server(),
-        launchParams;
-
-    if (window.PalmSystem && window.PalmSystem.launchParams) {
-      launchParams = JSON.parse(window.PalmSystem.launchParams);
-      this.template = launchParams.template;
-      this.data = launchParams.data;
-      this.request_id = launchParams.id;
+    this.setPath(window.PalmSystem && window.PalmSystem.launchParams);
+  },
+  setPath: function(param)  {
+    var s = new server();
+    if (param) {
+      this.template = param.template;
+      this.data = param.data;
+      this.request_id = param.id;
     }
 
     s.getDataById(this.request_id, this.success.bind(this), this.err.bind(this));
+  },
+  handleRelaunch: function(sender, ev) {
+    this.setPath(ev.detail);
   },
   success: function(sender, res) {
     if (res.data) {

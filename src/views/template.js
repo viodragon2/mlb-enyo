@@ -20,11 +20,11 @@ var teamplate = Control.kind({
     this.createControlComponents();
     this.dataChanged();
   },
-  createDisplayComponents() {
+  createDisplayComponents: function() {
     var owner = this.hasOwnProperty('displayComponents') ? this.getInstanceOwner() : this;
     this.$.display.createComponents(this.displayComponents, {owner: owner});
   },
-  createControlComponents() {
+  createControlComponents: function() {
     var owner = this.hasOwnProperty('controlComponents') ? this.getInstanceOwner() : this;
     this.$.control.createComponents(this.controlComponents, {owner: owner});
   },
