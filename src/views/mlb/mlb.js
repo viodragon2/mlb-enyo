@@ -41,6 +41,7 @@ var mlb = template.kind({
     template.prototype.create.apply(this, arguments);
   },
   dataChanged: function() {
+    this.data = this.data.data;
     var date = new Date(this.data.games.year, parseInt(this.data.games.month) - 1, this.data.games.day);
 
     this.set('date', date);
