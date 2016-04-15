@@ -1,3 +1,5 @@
+require('enyo-webos');
+
 var
   Application = require('enyo/Application'),
   Signals = require('enyo/Signals');
